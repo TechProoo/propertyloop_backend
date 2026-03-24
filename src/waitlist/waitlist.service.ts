@@ -226,11 +226,6 @@ export class WaitlistService {
                   We're working hard to bring you the most comprehensive real estate management solution. Stay tuned for exciting announcements and be ready to transform the way you work with property.
                 </div>
 
-                <!-- CTA Section -->
-                <div class="cta-section">
-                  <a href="https://propertyloop.ng" class="cta-button">Visit PropertyLoop</a>
-                </div>
-
                 <div class="closing">
                   If you have any questions, suggestions, or just want to chat about real estate innovation, feel free to reply to this email. We'd love to hear from you!
                 </div>
