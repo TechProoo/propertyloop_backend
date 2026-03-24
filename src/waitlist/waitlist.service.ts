@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { MailService } from '../mail/mail.service';
 import { CreateWaitlistDto } from './dto/create-waitlist.dto';
@@ -16,6 +16,15 @@ export class WaitlistService {
   }
 
   private async sendWelcomeEmail(createWaitlistDto: CreateWaitlistDto) {
+    // Check if email already exists
+    const existingEntry = await this.prisma.waitlistEntry.findUnique({
+      where: { email: createWaitlistDto.email },
+    });
+
+    if (existingEntry) {
+      throw new ConflictException('This email is already on the waitlist');
+    }
+
     const entry = await this.prisma.waitlistEntry.create({
       data: {
         first_name: createWaitlistDto.first_name,
@@ -312,10 +321,9 @@ export class WaitlistService {
       this.escapeCsvField(entry.created_at.toISOString()),
     ]);
 
-    const csv = [
-      headers.join(','),
-      ...rows.map((row) => row.join(',')),
-    ].join('\n');
+    const csv = [headers.join(','), ...rows.map((row) => row.join(','))].join(
+      '\n',
+    );
 
     return csv;
   }
