@@ -32,7 +32,7 @@ export class WaitlistService {
     this.mailService
       .sendEmail({
         to: entry.email,
-        subject: 'Welcome to PropertyLoop Waitlist',
+        subject: 'PropertyLoop',
         text: `Welcome to PropertyLoop! Thank you for joining our waitlist as a ${createWaitlistDto.type.replace(/_/g, ' ')}.`,
         html: this.getWelcomeEmailTemplate(entry.first_name),
       })
