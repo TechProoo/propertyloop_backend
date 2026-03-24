@@ -47,4 +47,52 @@ export class WaitlistService {
       where: { id },
     });
   }
+
+  async export(): Promise<string> {
+    const entries = await this.prisma.waitlistEntry.findMany({
+      orderBy: {
+        created_at: 'desc',
+      },
+    });
+
+    if (entries.length === 0) {
+      return 'First Name,Last Name,Email,Phone,Company Name,Location,Type,Created At\n';
+    }
+
+    const headers = [
+      'First Name',
+      'Last Name',
+      'Email',
+      'Phone',
+      'Company Name',
+      'Location',
+      'Type',
+      'Created At',
+    ];
+
+    const rows = entries.map((entry) => [
+      this.escapeCsvField(entry.first_name),
+      this.escapeCsvField(entry.last_name),
+      this.escapeCsvField(entry.email),
+      this.escapeCsvField(entry.phone),
+      this.escapeCsvField(entry.company_name || ''),
+      this.escapeCsvField(entry.location || ''),
+      this.escapeCsvField(entry.type),
+      this.escapeCsvField(entry.created_at.toISOString()),
+    ]);
+
+    const csv = [
+      headers.join(','),
+      ...rows.map((row) => row.join(',')),
+    ].join('\n');
+
+    return csv;
+  }
+
+  private escapeCsvField(field: string): string {
+    if (field.includes(',') || field.includes('"') || field.includes('\n')) {
+      return `"${field.replace(/"/g, '""')}"`;
+    }
+    return field;
+  }
 }
