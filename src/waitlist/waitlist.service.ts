@@ -11,6 +11,8 @@ export class WaitlistService {
     private mailService: MailService,
   ) {}
 
+  private readonly LOGO_URL = 'https://image2url.com/r2/default/images/1774405533651-13ef5a22-bfcb-4d8e-801e-563f4451c8b0.png';
+
   create(createWaitlistDto: CreateWaitlistDto) {
     return this.sendWelcomeEmail(createWaitlistDto);
   }
@@ -62,197 +64,199 @@ export class WaitlistService {
           <title>Welcome to PropertyLoop</title>
           <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { 
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-              background-color: #f5f5f5;
-              color: #333;
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+              background-color: #f4f4f5;
+              color: #111827;
               line-height: 1.6;
+              -webkit-font-smoothing: antialiased;
             }
-            .wrapper { background-color: #f5f5f5; padding: 20px 0; }
-            .container { 
-              max-width: 600px; 
-              margin: 0 auto; 
+            .wrapper { background-color: #f4f4f5; padding: 40px 16px; }
+            .container {
+              max-width: 600px;
+              margin: 0 auto;
               background-color: #ffffff;
               border-radius: 8px;
+              border: 1px solid #e5e7eb;
               overflow: hidden;
-              box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             }
-            .header { 
-              background: linear-gradient(135deg, #2f9e61 0%, #247a4a 100%);
-              color: white; 
-              padding: 40px 20px;
-              text-align: center;
+            .header {
+              background-color: #0f1f14;
+              padding: 36px 48px;
+              text-align: left;
             }
-            .header img {
-              max-width: 120px;
-              height: auto;
-              margin-bottom: 15px;
-            }
-            .header h1 {
-              font-size: 28px;
-              font-weight: 600;
-              margin: 10px 0 0 0;
-            }
-            .header p {
-              font-size: 14px;
-              opacity: 0.9;
-              margin-top: 5px;
-            }
-            .content { 
-              padding: 40px;
-            }
-            .greeting {
-              font-size: 16px;
-              margin-bottom: 20px;
-              color: #333;
-            }
-            .greeting strong {
-              color: #2f9e61;
-            }
-            .message {
-              font-size: 15px;
-              color: #555;
-              margin-bottom: 25px;
-              line-height: 1.8;
-            }
-            .features {
-              background-color: #f9fafb;
-              border-left: 4px solid #2f9e61;
-              padding: 20px;
-              margin: 25px 0;
-              border-radius: 4px;
-            }
-            .features h3 {
-              color: #2f9e61;
-              font-size: 16px;
-              margin-bottom: 15px;
-            }
-            .features ul {
-              list-style: none;
-              padding-left: 0;
-            }
-            .features li {
-              padding: 8px 0;
-              font-size: 14px;
-              color: #555;
-              display: flex;
-              align-items: center;
-            }
-            .features li:before {
-              content: "✓";
-              color: #2f9e61;
-              font-weight: bold;
-              margin-right: 10px;
-              font-size: 16px;
-            }
-            .cta-section {
-              text-align: center;
-              margin: 30px 0;
-            }
-            .cta-button {
-              display: inline-block;
+            .header img { height: 36px; width: auto; display: block; }
+            .divider-green {
+              height: 3px;
               background-color: #2f9e61;
-              color: white;
-              padding: 12px 30px;
-              text-decoration: none;
-              border-radius: 5px;
+            }
+            .content { padding: 48px; }
+            .greeting {
+              font-size: 22px;
               font-weight: 600;
-              font-size: 14px;
-              transition: background-color 0.3s;
+              color: #111827;
+              margin-bottom: 16px;
+              letter-spacing: -0.3px;
             }
-            .cta-button:hover {
-              background-color: #247a4a;
+            .body-text {
+              font-size: 15px;
+              color: #4b5563;
+              line-height: 1.75;
+              margin-bottom: 32px;
             }
-            .closing {
-              font-size: 14px;
-              color: #666;
-              margin-top: 25px;
-              padding-top: 25px;
-              border-top: 1px solid #eee;
-            }
-            .signature {
-              margin-top: 15px;
-              font-size: 14px;
-            }
-            .signature strong {
+            .section-label {
+              font-size: 11px;
+              font-weight: 700;
+              letter-spacing: 1px;
+              text-transform: uppercase;
               color: #2f9e61;
+              margin-bottom: 16px;
+            }
+            .feature-list { margin-bottom: 36px; }
+            .feature-row {
+              display: flex;
+              align-items: flex-start;
+              padding: 14px 0;
+              border-bottom: 1px solid #f3f4f6;
+            }
+            .feature-row:last-child { border-bottom: none; }
+            .feature-dot {
+              width: 6px;
+              height: 6px;
+              border-radius: 50%;
+              background-color: #2f9e61;
+              margin-top: 8px;
+              margin-right: 14px;
+              flex-shrink: 0;
+            }
+            .feature-content { flex: 1; }
+            .feature-title {
+              font-size: 14px;
+              font-weight: 600;
+              color: #111827;
+              margin-bottom: 2px;
+            }
+            .feature-desc {
+              font-size: 14px;
+              color: #6b7280;
+              line-height: 1.6;
+            }
+            .divider {
+              border: none;
+              border-top: 1px solid #e5e7eb;
+              margin: 36px 0;
+            }
+            .closing { font-size: 15px; color: #4b5563; line-height: 1.75; }
+            .signature { margin-top: 28px; }
+            .signature-name {
+              font-size: 14px;
+              font-weight: 600;
+              color: #111827;
+            }
+            .signature-title {
+              font-size: 13px;
+              color: #9ca3af;
+              margin-top: 2px;
             }
             .footer {
               background-color: #f9fafb;
-              padding: 20px;
+              border-top: 1px solid #e5e7eb;
+              padding: 28px 48px;
               text-align: center;
+            }
+            .footer-logo { margin-bottom: 16px; }
+            .footer-logo img { height: 24px; width: auto; opacity: 0.6; }
+            .footer-links {
               font-size: 12px;
-              color: #999;
-              border-top: 1px solid #eee;
+              color: #9ca3af;
+              margin-bottom: 10px;
             }
-            .footer a {
-              color: #2f9e61;
+            .footer-links a {
+              color: #6b7280;
               text-decoration: none;
+              margin: 0 10px;
             }
-            .divider {
-              height: 1px;
-              background-color: #eee;
-              margin: 20px 0;
+            .footer-links a:hover { color: #111827; }
+            .footer-copy {
+              font-size: 11px;
+              color: #d1d5db;
+            }
+            @media (max-width: 600px) {
+              .content { padding: 32px 24px; }
+              .header { padding: 28px 24px; }
+              .footer { padding: 24px; }
             }
           </style>
         </head>
         <body>
           <div class="wrapper">
             <div class="container">
-              <!-- Header with Logo -->
               <div class="header">
-                <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="60" cy="60" r="58" fill="white" opacity="0.1" stroke="white" stroke-width="2"/>
-                  <path d="M60 30L80 50V85H40V50L60 30Z" fill="white"/>
-                  <path d="M50 60L60 50L70 60" stroke="white" stroke-width="2" fill="none"/>
-                </svg>
-                <h1>Welcome to PropertyLoop</h1>
-                <p>Your journey to smarter real estate management starts here</p>
+                <img src="${this.LOGO_URL}" alt="PropertyLoop">
               </div>
+              <div class="divider-green"></div>
 
-              <!-- Main Content -->
               <div class="content">
-                <div class="greeting">
-                  Hi <strong>${firstName}</strong>,
+                <div class="greeting">Hi ${firstName},</div>
+
+                <p class="body-text">
+                  Thank you for joining the PropertyLoop waitlist. You're now part of a growing community of real estate professionals who are shaping the future of property management in Nigeria.
+                </p>
+
+                <div class="section-label">What happens next</div>
+                <div class="feature-list">
+                  <div class="feature-row">
+                    <div class="feature-dot"></div>
+                    <div class="feature-content">
+                      <div class="feature-title">Early Access</div>
+                      <div class="feature-desc">You'll be among the first to access the platform when we launch.</div>
+                    </div>
+                  </div>
+                  <div class="feature-row">
+                    <div class="feature-dot"></div>
+                    <div class="feature-content">
+                      <div class="feature-title">Exclusive Updates</div>
+                      <div class="feature-desc">We'll keep you informed on development progress and key milestones.</div>
+                    </div>
+                  </div>
+                  <div class="feature-row">
+                    <div class="feature-dot"></div>
+                    <div class="feature-content">
+                      <div class="feature-title">Launch Benefits</div>
+                      <div class="feature-desc">Early adopters receive special pricing and perks at launch.</div>
+                    </div>
+                  </div>
+                  <div class="feature-row">
+                    <div class="feature-dot"></div>
+                    <div class="feature-content">
+                      <div class="feature-title">Your Input Matters</div>
+                      <div class="feature-desc">We actively incorporate feedback from our waitlist in shaping the product.</div>
+                    </div>
+                  </div>
                 </div>
 
-                <div class="message">
-                  Thank you for joining the PropertyLoop waitlist! We're thrilled to have you as part of our community. Your interest in revolutionizing real estate management means a lot to us.
-                </div>
+                <hr class="divider">
 
-                <!-- Features Section -->
-                <div class="features">
-                  <h3>What to Expect</h3>
-                  <ul>
-                    <li>Early access to PropertyLoop's innovative platform</li>
-                    <li>Regular updates on our development progress</li>
-                    <li>Exclusive launch offers and benefits for early adopters</li>
-                    <li>Direct input on features that matter most to you</li>
-                  </ul>
-                </div>
-
-                <div class="message">
-                  We're working hard to bring you the most comprehensive real estate management solution. Stay tuned for exciting announcements and be ready to transform the way you work with property.
-                </div>
-
-                <div class="closing">
-                  If you have any questions, suggestions, or just want to chat about real estate innovation, feel free to reply to this email. We'd love to hear from you!
-                </div>
+                <p class="closing">
+                  If you have questions or feedback, feel free to reply directly to this email. We read every message.
+                </p>
 
                 <div class="signature">
-                  Warm regards,<br>
-                  <strong>The PropertyLoop Team</strong><br>
-                  <span style="color: #999; font-size: 13px;">Making real estate management smarter</span>
+                  <div class="signature-name">The PropertyLoop Team</div>
+                  <div class="signature-title">propertyloop.ng</div>
                 </div>
               </div>
 
-              <!-- Footer -->
               <div class="footer">
-                <p>&copy; 2026 PropertyLoop. All rights reserved.</p>
-                <p>
-                  <a href="https://propertyloop.ng/privacy">Privacy Policy</a> • 
+                <div class="footer-logo">
+                  <img src="${this.LOGO_URL}" alt="PropertyLoop">
+                </div>
+                <div class="footer-links">
+                  <a href="https://propertyloop.ng/privacy">Privacy Policy</a>
                   <a href="https://propertyloop.ng/terms">Terms of Service</a>
-                </p>
+                  <a href="https://propertyloop.ng/contact">Contact</a>
+                </div>
+                <div class="footer-copy">&copy; 2026 PropertyLoop. All rights reserved.</div>
               </div>
             </div>
           </div>
@@ -333,5 +337,79 @@ export class WaitlistService {
       return `"${field.replace(/"/g, '""')}"`;
     }
     return field;
+  }
+
+  // Helper method to create branded email templates for other email types
+  getEmailTemplate(type: 'welcome' | 'confirmation' | 'update' | 'notification', data: Record<string, any>): string {
+    const sharedStyles = `
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        background-color: #f4f4f5;
+        color: #111827;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrapper { background-color: #f4f4f5; padding: 40px 16px; }
+      .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; overflow: hidden; }
+      .header { background-color: #0f1f14; padding: 36px 48px; text-align: left; }
+      .header img { height: 36px; width: auto; display: block; }
+      .divider-green { height: 3px; background-color: #2f9e61; }
+      .content { padding: 48px; }
+      .footer { background-color: #f9fafb; border-top: 1px solid #e5e7eb; padding: 28px 48px; text-align: center; }
+      .footer-logo { margin-bottom: 14px; }
+      .footer-logo img { height: 24px; width: auto; opacity: 0.6; }
+      .footer-links { font-size: 12px; margin-bottom: 10px; }
+      .footer-links a { color: #6b7280; text-decoration: none; margin: 0 10px; }
+      .footer-copy { font-size: 11px; color: #d1d5db; }
+      @media (max-width: 600px) { .content { padding: 32px 24px; } .header { padding: 28px 24px; } .footer { padding: 24px; } }
+    `;
+
+    const commonFooter = `
+      <div class="footer">
+        <div class="footer-logo">
+          <img src="${this.LOGO_URL}" alt="PropertyLoop">
+        </div>
+        <div class="footer-links">
+          <a href="https://propertyloop.ng/privacy">Privacy Policy</a>
+          <a href="https://propertyloop.ng/terms">Terms of Service</a>
+          <a href="https://propertyloop.ng/contact">Contact</a>
+        </div>
+        <div class="footer-copy">&copy; 2026 PropertyLoop. All rights reserved.</div>
+      </div>
+    `;
+
+    if (type === 'confirmation') {
+      return `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>PropertyLoop Confirmation</title>
+            <style>${sharedStyles}</style>
+          </head>
+          <body>
+            <div class="wrapper">
+              <div class="container">
+                <div class="header">
+                  <img src="${this.LOGO_URL}" alt="PropertyLoop">
+                </div>
+                <div class="divider-green"></div>
+                <div class="content">
+                  <h2 style="font-size: 20px; font-weight: 600; color: #111827; margin-bottom: 16px;">Confirmed</h2>
+                  <p style="font-size: 15px; color: #4b5563; line-height: 1.75;">
+                    ${data.message || 'Your request has been confirmed. Thank you for joining PropertyLoop!'}
+                  </p>
+                </div>
+                ${commonFooter}
+              </div>
+            </div>
+          </body>
+        </html>
+      `;
+    }
+
+    return '';
   }
 }

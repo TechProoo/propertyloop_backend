@@ -1,33 +1,44 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import { SendEmailDto } from './dto/send-email.dto';
 
 @Injectable()
 export class MailService {
-  private transporter: nodemailer.Transporter;
+  private resend: Resend;
+  private from: string;
 
   constructor(private configService: ConfigService) {
-    this.transporter = nodemailer.createTransport({
-      host: this.configService.get<string>('MAIL_HOST'),
-      port: this.configService.get<number>('MAIL_PORT'),
-      secure: this.configService.get<string>('MAIL_SECURE') === 'true',
-      auth: {
-        user: this.configService.get<string>('MAIL_USER'),
-        pass: this.configService.get<string>('MAIL_PASSWORD'),
-      },
-    });
+    const apiKey = this.configService.get<string>('RESEND_API_KEY');
+    const from = this.configService.get<string>('MAIL_FROM');
+
+    if (!apiKey) {
+      throw new Error('RESEND_API_KEY is not defined');
+    }
+
+    if (!from) {
+      throw new Error('MAIL_FROM is not defined');
+    }
+
+    this.resend = new Resend(apiKey);
+    this.from = from;
   }
 
-  async sendEmail(sendEmailDto: SendEmailDto): Promise<void> {
+  async sendEmail(sendEmailDto: SendEmailDto) {
     const { to, subject, html, text } = sendEmailDto;
 
-    await this.transporter.sendMail({
-      from: this.configService.get<string>('MAIL_FROM'),
-      to,
-      subject,
-      text,
-      html,
-    });
+    try {
+      const response = await this.resend.emails.send({
+        from: this.from,
+        to,
+        subject,
+        html: html || `<p>${text}</p>`,
+      });
+
+      return response;
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      throw error;
+    }
   }
 }
